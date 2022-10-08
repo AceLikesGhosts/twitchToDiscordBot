@@ -1,11 +1,11 @@
-class linkedListNode<Type>
+class linkedListNode<T>
 {
 
-    public data: Type | undefined;
+    public data: T | undefined;
     public next: any = null;
     public prev: any = null;
 
-    constructor(data?: Type)
+    constructor(data?: T)
     {
         if(data)
             this.data = data;
@@ -25,8 +25,8 @@ class linkedListNode<Type>
 
         const key: string = isForward ? 'prev' : 'next';
 
-        if(this[key as keyof linkedListNode<any>] && index)
-            return this[key as keyof linkedListNode<any>].getItemAt(--index, isForward);
+        if(this[key as keyof linkedListNode<T>] && index)
+            return this[key as keyof linkedListNode<T>].getItemAt(--index, isForward);
 
         return null;
     }
@@ -66,7 +66,7 @@ class nodeInterface<T>
      * @param {*} data - the data that will be inserted into the new linked list node.
      * @returns The new node that was created, it will also be placed inside `lastCreatedNode`
      */
-    addNode(data?: any)
+    addNode(data?: T): linkedListNode<T>
     {
         const newNode = new linkedListNode(data);
         newNode.prev = this.lastCreatedNode;
@@ -86,7 +86,7 @@ class nodeInterface<T>
     /**
     * Basically prepare this node for deletion, once this is done, memory management from js will need to take care of this after a `delete` call
     */
-    rebindForDelete(targetNode: any)
+    rebindForDelete(targetNode: linkedListNode<T>): void
     {
         if(targetNode.next?.prev)
             targetNode.next.prev = targetNode.prev;
